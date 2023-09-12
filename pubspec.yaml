@@ -1,0 +1,24 @@
+name: akwap
+description: A database of Uganda's districts, counties, sub-counties, parishes and villages.
+version: 0.0.1
+homepage: https://github.com/wizlif/akwap_flutter
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  equatable: ^2.0.5
+  flutter:
+    sdk: flutter
+  fuzzywuzzy: ^1.1.6
+
+dev_dependencies:
+  flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  assets:
+    - assets/districts.json           
+                                      

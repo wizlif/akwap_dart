@@ -1,0 +1,33 @@
+name: Release to pub.dev
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+*'
+
+jobs:
+  publish:
+    name: 'Publish to pub.dev'
+    environment: production
+    permissions:
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout repository
+      - uses: actions/checkout@v3
+      - name: Update version
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          sed -i 's|version:.*|version: '"${TAG:1}"'|g' pubspec.yaml
+      # Setup Dart SDK with JWT token
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 2.19.1
+      # Minimal package setup and dry run checks.
+      - name: Install dependencies
+        run: dart pub get
+      - name: Publish - dry run
+        run: dart pub publish --dry-run
+      - name: Publish to pub.dev
+        run: dart pub publish -f
